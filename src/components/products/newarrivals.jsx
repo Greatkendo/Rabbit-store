@@ -333,7 +333,7 @@ function NewArrivals() {
 
   return (
     <section>
-      <div className="container mx-auto text-center mb-10 relative">
+      <div className="container mx-auto text-center mb-15 relative">
         <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
 
         <p className="text-lg text-gray-600 mb-8">
@@ -341,7 +341,7 @@ function NewArrivals() {
         </p>
 
         {/* Scroll buttons */}
-        <div className="absolute right-0 bottom-[-30px] flex space-x-2">
+        <div className="absolute right-0 bottom-[-50px] flex space-x-2">
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}

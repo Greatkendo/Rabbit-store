@@ -202,6 +202,9 @@ function NewArrivals() {
   const scrollRef = useRef(null);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
+ const [isDragging, setIsDragging] = useState(false);
+ const [startX, setStartX] = useState(0);
+ const [scrollLeft, setScrollLeft] = useState(false);
 
   const newArrivals = [
      {
@@ -301,11 +304,29 @@ function NewArrivals() {
   },
   ];
 
+  const handlMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft)
+  }
+
+  const handleMouseMove = (e) => {
+    if(!isDragging) return;
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = x - startX;
+    scrollRef.current.scrollLeft = scrollLeft - walk
+  }
+
+  const handleMouseUpOrLeave = (e) => {
+    setIsDragging(false);
+  }
+
   const scroll = (direction) => {
     const scrollAmount = direction === "left" ? -300 : 300;
     scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
+  // update scroll buttons
   const updateScrollButtons = () => {
     const container = scrollRef.current;
     if (container) {
@@ -315,6 +336,14 @@ function NewArrivals() {
       setCanScrollLeft(leftScroll > 0);
       setCanScrollRight(rightScrollable);
     }
+
+    console.log({
+      scrollLeft: container.scrollLeft,
+      clientWidth: container.clientWidth,
+      containerScrollWidth: container.containerScrollWidth,
+      offsetLeft: scrollRef.current.offsetLeft,
+    });
+    
   };
 
   useEffect(() => {
@@ -322,7 +351,7 @@ function NewArrivals() {
     if (container) {
       container.addEventListener("scroll", updateScrollButtons);
       updateScrollButtons(); // check scroll state on mount
-    }
+    };
 
     return () => {
       if (container) {
@@ -332,7 +361,7 @@ function NewArrivals() {
   }, []);
 
   return (
-    <section>
+    <section className="py-16 px-4 lg:px-0">
       <div className="container mx-auto text-center mb-15 relative">
         <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
 
@@ -360,13 +389,14 @@ function NewArrivals() {
       </div>
 
       {/* Scrollable content */}
-      <div ref={scrollRef} className="container mx-auto overflow-x-scroll flex space-x-6 relative">
+      <div ref={scrollRef} className={`container mx-auto overflow-x-scroll flex space-x-6 relative ${isDragging ? "cursor-grabbing" : "cursor-grab"}`} onMouseDown={handlMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUpOrLeave} onMouseLeave={handleMouseUpOrLeave}>
         {newArrivals.map((product) => (
           <div key={product._id} className="min-w-[100%] sm:min-w-[50%] lg:min-w-[30%] relative">
             <img
               src={product.images[0]?.url}
               alt={product.images[0]?.alt || product.name}
               className="w-full h-[500px] object-cover rounded-lg"
+              draggable="false"
             />
 
             <div className="absolute bottom-0 left-0 right-0 opacity-50 backdrop-blur-md text-white p-4 rounded-b-lg">

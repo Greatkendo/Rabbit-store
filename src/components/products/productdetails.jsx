@@ -161,10 +161,10 @@ function ProductDetails () {
       <table className="w-full text-left text-sm text-gray-600">
        <tbody>
         <tr>
-         <td className="py-1">Brand</td>
+         <td className="py-1">Brand:</td>
          <td className="py-1">{selectedProduct.brand}</td>
 
-          <td className="py-1">Material</td>
+          <td className="py-1">Material:</td>
          <td className="py-1">{selectedProduct.material}</td>
         </tr>
        </tbody>

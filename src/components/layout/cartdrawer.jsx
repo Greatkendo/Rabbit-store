@@ -1,7 +1,16 @@
+'use client';
+
 import { IoMdClose } from "react-icons/io";
 import CartContent from "../cart/cartcontent";
+import { useRouter } from 'next/navigation';
 
-function CartDrawer ({drawerOpen, toggleCartDrawer}) {
+function CartDrawer({ drawerOpen, toggleCartDrawer }) {
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    toggleCartDrawer();
+    router.push("/checkout");
+  };
  return (
   <section className={`fixed top-0 right-0 w-3/4 sm:w-1/2 md:w-[30rem] h-full bg-white shadow-lg transform transition-transform duration-300 flex flex-col z-50 ${drawerOpen ? "translate-x-0" : "translate-x-full"}`}>
    {/* Close Button */}
@@ -20,7 +29,7 @@ function CartDrawer ({drawerOpen, toggleCartDrawer}) {
 
    {/* checkout button fixed at the bottom */}
    <div className="p-4 bg-white sticky bottom-0">
-    <button className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition">CheckOut</button>
+    <button onClick={handleCheckout} className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition">CheckOut</button>
     <p className="text-sm tracking-tighter text-gray-400 mt-2 text-center">
      Shipping, taxes, and discount codes calculated at checkout
     </p>

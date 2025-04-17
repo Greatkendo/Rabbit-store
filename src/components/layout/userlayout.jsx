@@ -1,6 +1,7 @@
 import Footer from "../common/footer";
 import Header from "../common/header";
 import FeaturedCollection from "../products/featuredcollections";
+import FeatureSection from "../products/featuressection";
 import GenderCollectionSection from "../products/gendercollectionsection";
 import NewArrivals from "../products/newarrivals";
 import ProductDetails from "../products/productdetails";
@@ -98,9 +99,7 @@ const placholderProducts = [
 ]
 function UserLayout () {
  return (
-  <>
-  {/* Header */}
-  <Header />
+  <>  
   {/* Main content */}
   <main>
    <Hero />
@@ -121,9 +120,8 @@ function UserLayout () {
    </div>
 
    <FeaturedCollection />
+   <FeatureSection />
   </main>
-  {/* Footer */}
-  <Footer />
   </>
  );
 };

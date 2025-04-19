@@ -51,6 +51,9 @@ function NavBar () {
     
     {/* Right - Icons */}
     <div className="flex items-center space-x-4">
+      <Link className="block bg-black px-2 py-2 rounded text-sm text-white" href={'/adminlayout'} >
+      Admin
+      </Link>
      <Link href={'/profile'} className="hover:text-black">
       <HiOutlineUser className="h-6 w-6 text-gray-700"/>
      </Link>
